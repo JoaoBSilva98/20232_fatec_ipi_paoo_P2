@@ -34,11 +34,12 @@ app.get('/lembretes', (req, res) => {
 
 //receber eventos
 //POST /eventos
-app.post('/eventos', (req, res) => {
+app.post('/eventos', async (req, res) => {
   try{
     //princípio aberto/fechado
     const evento = req.body
-    funcoes[evento.type](evento.payload)
+    funcoes[evento.type](evento.payload);
+    await axios.post('http://localhost:8000/eventos', req.body);
   }
   catch(e){}
   res.status(200).json(baseConsolidada)

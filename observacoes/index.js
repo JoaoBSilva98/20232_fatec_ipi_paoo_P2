@@ -83,7 +83,22 @@ app.post(
         lembreteId: idLembrete,
         status: 'aguardando'
       }
-    })
+    });
+    
+    try {
+      await axios.post('http://localhost:8000/eventos', {
+        type: 'ObservacaoCriada',
+        payload: {
+          id: idObs,
+          texto: texto,
+          lembreteId: idLembrete,
+          status: 'aguardando',
+        },
+      });
+    } catch (error) {
+      console.error('Erro ao enviar evento para o microserviço de logs', error);
+    }
+    
     res.status(201).send(observacoesDoLembrete)
   }
 )

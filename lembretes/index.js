@@ -41,7 +41,15 @@ app.post('/lembretes', async (req, res) => {
   await axios.post('http://localhost:10000/eventos', {
     type: "LembreteCriado",
     payload: lembrete
-  })
+  });
+  try {
+    await axios.post('http://localhost:8000/eventos', {
+      type: 'LembreteCriado',
+      payload: lembrete,
+    });
+  } catch (error) {
+    console.error('Erro no logs', error);
+  }
   // HTTP 201 Created
   res.status(201).send(lembrete)
 })
